@@ -23,7 +23,12 @@ def audit_contract():
     Provide the analysis as follows:
     1. Security Analysis:
     - Check for Reentrancy vulnerabilities.
+    
+    for example - caddress.call(id, from, _tos[i], v[i] * 1000000000000000000);
+	something like this has a reentrancy vulnerability
+    
     - Look for issues with Gas Limit and Loops.
+    
     - Identify Overflow and Underflow risks.
     - Examine External Contract Calls for potential security threats.
     - Assess for any Visibility issues with functions and state variables.

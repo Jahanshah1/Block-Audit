@@ -15,6 +15,7 @@ const Application = () => {
   const [account, setAccount] = useState("");
   const [userNFTs, setUserNFTs] = useState([]);
 
+  
   useEffect(() => {
     // Initialize Web3 and contract connection
     const initWeb3 = async () => {
@@ -595,15 +596,21 @@ const Application = () => {
         alert("MetaMask not detected. Please install MetaMask extension.");
         return;
       }
-
+  
       if (!contract) {
         alert("Contract not initialized.");
         return;
       }
-
-      const gasAmount = await contract.methods.mintBAT(analysisText).estimateGas({ from: account });
-      const result = await contract.methods.mintBAT(analysisText).send({ from: account, gas: gasAmount });
-
+  
+      const combinedResult = `${auditResult1}\n${auditResult2}\n${auditResult3}`;
+      if (!combinedResult.trim()) {
+        alert("No audit results to mint.");
+        return;
+      }
+  
+      const gasAmount = await contract.methods.mintBAT(combinedResult).estimateGas({ from: account });
+      const result = await contract.methods.mintBAT(combinedResult).send({ from: account, gas: gasAmount });
+  
       if (result.status) {
         alert("Certificate minted successfully.");
       } else {
@@ -614,6 +621,7 @@ const Application = () => {
       alert("Failed to mint the certificate.");
     }
   };
+  
 
    const fetchUserNFTs = async () => {
     try {
@@ -668,6 +676,12 @@ const Application = () => {
       <span className="text font-bold">Fetch User NFTs</span>
     </button>
 
+    <div>
+      {userNFTs.map((nft, index) => (
+        <p key={index}>{nft}</p>
+      ))}
+    </div>
+
       <div className="result-container" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
         <div className={`w-full p-4 rounded ${auditResult1 ? 'bg-gray-800 bg-opacity-25' : ''}`}>
           {auditResult1 && auditResult1.split('\n').map((line, index) => (
@@ -699,3 +713,4 @@ const Application = () => {
 };
 
 export default Application;
+
