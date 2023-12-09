@@ -19,7 +19,7 @@ const Application = () => {
     const [account, setAccount] = useState("");
     const [userNFTs, setUserNFTs] = useState([]);
 
-    const [lighthouseResponse, setLighthouseResponse] = useState("");
+    const [hash, setHash] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
 
@@ -684,10 +684,13 @@ const Application = () => {
         };
         const text = generateTextFromAuditResults();
 
-        console.log(text)
+        
         const apiKey = process.env.REACT_APP_LIGHTHOUSE_API_KEY;
         const response = await lighthouse.uploadText(text, apiKey)
         console.log(response)
+        if (response && response.data && response.data.Hash) {
+            setHash(response.data.Hash);
+        }
         // https://gateway.lighthouse.storage/ipfs/QmUJeYrGpi8Mi7hxtap6DTkX5iKJEpGxdGVZm3x15yMuNN
 
     }
@@ -787,15 +790,19 @@ const Application = () => {
         <span className="text font-bold">Fetch User NFTs</span>
       </button>
  
-    
-
+      <div className="absolute right-0 p-2 border border-gray-200 text-sm text-white max-w-xs break-words font-bold" style={{marginTop:'210px'}}>
+  <p>CID (Hash):</p>
+  <p className="break-all">{hash}</p>
+</div>
       <div>
         {userNFTs.map((nft, index) => (
           <p key={index}>{nft}</p>
         ))}
       </div>
+   
     </div>
   </div>
+
 </div>
 
 
