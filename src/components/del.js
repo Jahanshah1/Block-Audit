@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
-import Img from './BG.jpg'
-
 
 
 const Application = () => {
@@ -13,7 +11,6 @@ const Application = () => {
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
   const [account, setAccount] = useState("");
-  const [userNFTs, setUserNFTs] = useState([]);
 
   useEffect(() => {
     // Initialize Web3 and contract connection
@@ -615,22 +612,6 @@ const Application = () => {
     }
   };
 
-   const fetchUserNFTs = async () => {
-    try {
-      const accounts = await window.ethereum.request({ method: "eth_accounts" });
-      const userAddress = accounts[0]; // Assuming the user is connected to their Ethereum wallet
-      const userNFTIds = await contract.methods.fetchAllForUser().call({ from: userAddress });
-      setUserNFTs(userNFTIds.map((e)=>e.toString()));
-    } catch (error) {
-      console.error("Error fetching user's NFTs:", error);
-    }
-  };
-
-  useEffect(() => {
-    // Fetch user's NFTs when the component mounts
-    fetchUserNFTs();
-  }, []);
-  
   return (
     <div className="h-screen bg-center bg-cover bg-no-repeat relative flex items-center justify-center" style={{ backgroundImage: `url(${Img})`, backdropFilter: 'blur(10px)' }}>
       <div className="flex flex-col items-center justify-center p-4 bg-white bg-opacity-10 rounded" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
@@ -648,7 +629,6 @@ const Application = () => {
           </svg>
           <span className="text font-bold">Audit Contract</span>
         </button>
-        
         <textarea
           value={analysisText}
           onChange={(e) => setAnalysisText(e.target.value)} // Update the analysis text
@@ -656,18 +636,12 @@ const Application = () => {
           cols="50"
           className="textarea bg-gray-800 bg-opacity-25 text-white rounded p-4 my-4 w-full"
         ></textarea>
-        
               <button className="btn2" onClick={mintCertificate}>
         <svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" className="sparkle">
           <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z"></path>
         </svg>
         <span className="text font-bold">Mint Certificate</span>
       </button>
-
-      <button className="btn2" onClick={fetchUserNFTs}>
-      <span className="text font-bold">Fetch User NFTs</span>
-    </button>
-
       <div className="result-container" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
         <div className={`w-full p-4 rounded ${auditResult1 ? 'bg-gray-800 bg-opacity-25' : ''}`}>
           {auditResult1 && auditResult1.split('\n').map((line, index) => (
