@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import Img from './BG.jpg'
+import lighthouse from '@lighthouse-web3/sdk'
+
+
 
 
 
@@ -16,6 +19,8 @@ const Application = () => {
   const [userNFTs, setUserNFTs] = useState([]);
 
   
+
+
   useEffect(() => {
     // Initialize Web3 and contract connection
     const initWeb3 = async () => {
@@ -582,6 +587,7 @@ const Application = () => {
       setAuditResult1(result.result1 || "");
       setAuditResult2(result.result2 || "");
       setAuditResult3(result.result3 || "");
+      LiHo();
     } catch (error) {
       console.error("Error:", error);
       setAuditResult1("Failed to audit the contract.");
@@ -589,6 +595,10 @@ const Application = () => {
       setAuditResult3("Failed to audit the contract.");
     }
   };
+
+
+
+{/* Mint Certificate function from smart contract*/}
 
   const mintCertificate = async () => {
     try {
@@ -601,7 +611,7 @@ const Application = () => {
         alert("Contract not initialized.");
         return;
       }
-  
+{/* Responsible for minting the output dynamically */}
       const combinedResult = `${auditResult1}\n${auditResult2}\n${auditResult3}`;
       if (!combinedResult.trim()) {
         alert("No audit results to mint.");
@@ -623,6 +633,8 @@ const Application = () => {
   };
   
 
+
+{/* Fetching NFTs fucntion from smart contract */}
    const fetchUserNFTs = async () => {
     try {
       const accounts = await window.ethereum.request({ method: "eth_accounts" });
@@ -638,6 +650,41 @@ const Application = () => {
     // Fetch user's NFTs when the component mounts
     fetchUserNFTs();
   }, []);
+
+
+
+
+
+  {/*Lighthouse*/ }
+
+const LiHo = async () => {
+  const generateTextFromAuditResults = () => {
+    let text = "";
+  
+    if (auditResult1) {
+      text += auditResult1 + "\n";
+    }
+  
+    if (auditResult2) {
+      text += auditResult2 + "\n";
+    }
+  
+    if (auditResult3) {
+      text += auditResult3 + "\n";
+    }
+  
+    return text.trim(); // Remove extra newline at the end if any
+  };
+  const text = generateTextFromAuditResults();
+
+  console.log(text)
+  const apiKey = process.env.REACT_APP_LIGHTHOUSE_API_KEY;
+  const response = await lighthouse.uploadText(text, apiKey)
+  console.log(response)
+  // https://gateway.lighthouse.storage/ipfs/QmUJeYrGpi8Mi7hxtap6DTkX5iKJEpGxdGVZm3x15yMuNN
+
+}
+
   
   return (
     <div className="h-screen bg-center bg-cover bg-no-repeat relative flex items-center justify-center" style={{ backgroundImage: `url(${Img})`, backdropFilter: 'blur(10px)' }}>
@@ -656,15 +703,7 @@ const Application = () => {
           </svg>
           <span className="text font-bold">Audit Contract</span>
         </button>
-        
-        <textarea
-          value={analysisText}
-          onChange={(e) => setAnalysisText(e.target.value)} // Update the analysis text
-          rows="10"
-          cols="50"
-          className="textarea bg-gray-800 bg-opacity-25 text-white rounded p-4 my-4 w-full"
-        ></textarea>
-        
+
               <button className="btn2" onClick={mintCertificate}>
         <svg height="24" width="24" fill="#FFFFFF" viewBox="0 0 24 24" data-name="Layer 1" id="Layer_1" className="sparkle">
           <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z"></path>

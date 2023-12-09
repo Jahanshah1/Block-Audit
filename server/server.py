@@ -25,7 +25,7 @@ def audit_contract():
     - Check for Reentrancy vulnerabilities.
     
     for example - caddress.call(id, from, _tos[i], v[i] * 1000000000000000000);
-	something like this has a reentrancy vulnerability
+	something like this has a reentrancy vulnerability if you find a similar code mark it as vulnerable to reentrancy
     
     - Look for issues with Gas Limit and Loops.
     
