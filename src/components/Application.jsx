@@ -3,6 +3,7 @@ import Web3 from "web3";
 import Img from './BG.jpg'
 import lighthouse from '@lighthouse-web3/sdk'
 
+import Flogo from './full-arbitrum-logo.png'
 
 
 
@@ -17,6 +18,10 @@ const Application = () => {
     const [contract, setContract] = useState(null);
     const [account, setAccount] = useState("");
     const [userNFTs, setUserNFTs] = useState([]);
+
+    const [lighthouseResponse, setLighthouseResponse] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+
 
 
 
@@ -571,6 +576,7 @@ const Application = () => {
 
     const auditContract = async () => {
         try {
+            setIsLoading(true);
             const response = await fetch("http://localhost:5001/audit", {
                 method: "POST",
                 headers: {
@@ -588,6 +594,7 @@ const Application = () => {
             setAuditResult2(result.result2 || "");
             setAuditResult3(result.result3 || "");
             LiHo();
+            setIsLoading(false);
         } catch (error) {
             console.error("Error:", error);
             setAuditResult1("Failed to audit the contract.");
@@ -688,52 +695,76 @@ const Application = () => {
 
     return (
         <div className="h-screen bg-center bg-cover bg-no-repeat relative" style={{ backgroundImage: `url(${Img})`, backdropFilter: 'blur(10px)' }}>
+              {/*<div className="w-full flex justify-center" style={{ position: 'absolute', top: 'var(--navbar-height)', left: 0, right: 0 }}>
+    <img src={Flogo} alt="Arbitrum Logo" style={{ height:'100px' ,marginTop:'80px' }} />
+    </div>*/}
   <div className="flex h-full justify-center items-center p-4">
+
     {/* Left Section */}
+    
     <div className="w-1/4 p-4">
-      <h1 className="text-white text-3xl mb-4">AI Contract Auditor</h1>
+        <h1 className="text-white font-bold text-2xl" style={{marginLeft:'11px', marginBottom:'10px'}}> Arbitrum Contract Auditor</h1>
       <div className="overflow-y-auto h-80">
         <textarea
+          placeholder="Paste your contract here"
           value={contractCode}
           onChange={(e) => setContractCode(e.target.value)}
           rows="10"
           cols="50"
-          className="textarea bg-gray-800 bg-opacity-25 text-white rounded p-4 w-full h-full overflow-y-auto"
+          className="textarea bg-white bg-opacity-25 text-[#1EC9E0] rounded p-4 w-full h-full overflow-y-auto"
         ></textarea>
       </div>
     </div>
 
-    {/* Center Section */}
-{/* Center Section */}
+  {/* Center Section */}
 <div className="w-2/4 p-4 flex items-center justify-center">
   <div className="w-full">
-    {/* Scrollable Container */}
-    <div className="w-full p-4 rounded bg-gray-800 bg-opacity-25" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
+    {isLoading ? (
+      // Loader
+      <div className="flex justify-center items-center">
+       <div class="banter-loader">
+            <div class="banter-loader__box"></div>
+            <div class="banter-loader__box"></div>
+            <div class="banter-loader__box"></div>
+            <div class="banter-loader__box"></div>
+            <div class="banter-loader__box"></div>
+            <div class="banter-loader__box"></div>
+            <div class="banter-loader__box"></div>
+            <div class="banter-loader__box"></div>
+            <div class="banter-loader__box"></div>
+        </div>
 
-      {/* auditResult1 Content */}
-      {auditResult1 && auditResult1.split('\n').map((line, index) => (
-        <p key={index} className="text-white mb-2">
-          {line}
-        </p>
-      ))}
+      </div>
+    ) : (
+      // Scrollable Container for Results
+      <div className="w-full p-4 rounded bg-gray-800 bg-opacity-25" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
 
-      {/* auditResult2 Content */}
-      {auditResult2 && auditResult2.split('\n').map((line, index) => (
-        <p key={index} className="text-white mb-2">
-          {line}
-        </p>
-      ))}
+        {/* auditResult1 Content */}
+        {auditResult1 && auditResult1.split('\n').map((line, index) => (
+          <p key={index} className="text-white mb-2">
+            {line}
+          </p>
+        ))}
 
-      {/* auditResult3 Content */}
-      {auditResult3 && auditResult3.split('\n').map((line, index) => (
-        <p key={index} className="text-white mb-2">
-          {line}
-        </p>
-      ))}
+        {/* auditResult2 Content */}
+        {auditResult2 && auditResult2.split('\n').map((line, index) => (
+          <p key={index} className="text-white mb-2">
+            {line}
+          </p>
+        ))}
 
-    </div>
+        {/* auditResult3 Content */}
+        {auditResult3 && auditResult3.split('\n').map((line, index) => (
+          <p key={index} className="text-white mb-2">
+            {line}
+          </p>
+        ))}
+
+      </div>
+    )}
   </div>
 </div>
+
 
 
     {/* Right Section */}
@@ -755,6 +786,8 @@ const Application = () => {
       <button className="btn2" onClick={fetchUserNFTs}>
         <span className="text font-bold">Fetch User NFTs</span>
       </button>
+ 
+    
 
       <div>
         {userNFTs.map((nft, index) => (
