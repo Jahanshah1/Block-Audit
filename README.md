@@ -138,9 +138,9 @@ Score: 90/100
 
 
 ##Links :
-yt demo link - https://www.youtube.com/watch?v=8v9xm9rDMeE
-NFT minting contract address ( deployed on Arbitrum Sepolia ) - https://sepolia-explorer.arbitrum.io/tx/0x5e2d1b92d526ae467fd1cc363f48fee7198da1a2f2a2d9dc060ae8f9dca3d7c4
-example output data on IPFS : https://gateway.lighthouse.storage/ipfs/QmUJeYrGpi8Mi7hxtap6DTkX5iKJEpGxdGVZm3x15yMuNN
+- yt demo link - https://www.youtube.com/watch?v=8v9xm9rDMeE
+- NFT minting contract address ( deployed on Arbitrum Sepolia ) - https://sepolia-explorer.arbitrum.io/tx/0x5e2d1b92d526ae467fd1cc363f48fee7198da1a2f2a2d9dc060ae8f9dca3d7c4
+- example output data on IPFS : https://gateway.lighthouse.storage/ipfs/QmUJeYrGpi8Mi7hxtap6DTkX5iKJEpGxdGVZm3x15yMuNN
 
 ## Run locally 
 Clone the project 
