@@ -137,3 +137,28 @@ Score: 90/100
 <img width="1469" alt="Screenshot 2023-12-10 at 5 48 28 AM" src="https://github.com/Jahanshah1/Block-Audit/assets/92823408/2c6e59ea-dee8-40f4-a0c6-b2a2a636488a">
 
 
+## Run locally 
+Clone the project 
+```bash 
+git clone https://github.com/Jahanshah1/Block-Audit
+```
+Go to app directory 
+```bash 
+cd app
+```
+Install dependencies 
+```bash 
+npm i 
+```
+Note - you will need OpenAI API key to use this and Lighthouse API key to store the output on IPFS
+start server
+```bash 
+cd server
+python3 server.py
+```
+start front-end 
+```bash
+npm start
+```
+
+If there are any problems please contact me shahjahanrajan@gmail.com
