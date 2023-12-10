@@ -150,7 +150,7 @@ Install dependencies
 ```bash 
 npm i 
 ```
-Note - you will need OpenAI API key to use this and Lighthouse API key to store the output on IPFS
+
 start server
 ```bash 
 cd server
@@ -160,5 +160,5 @@ start front-end
 ```bash
 npm start
 ```
-
+Note - you will need OpenAI API key to use this and Lighthouse API key to store the output on IPFS
 If there are any problems please contact me shahjahanrajan@gmail.com
