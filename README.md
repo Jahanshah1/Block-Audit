@@ -137,6 +137,11 @@ Score: 90/100
 <img width="1469" alt="Screenshot 2023-12-10 at 5 48 28 AM" src="https://github.com/Jahanshah1/Block-Audit/assets/92823408/2c6e59ea-dee8-40f4-a0c6-b2a2a636488a">
 
 
+##Links :
+yt demo link - https://www.youtube.com/watch?v=8v9xm9rDMeE
+NFT minting contract address ( deployed on Arbitrum Sepolia ) - https://sepolia-explorer.arbitrum.io/tx/0x5e2d1b92d526ae467fd1cc363f48fee7198da1a2f2a2d9dc060ae8f9dca3d7c4
+example output data on IPFS : https://gateway.lighthouse.storage/ipfs/QmUJeYrGpi8Mi7hxtap6DTkX5iKJEpGxdGVZm3x15yMuNN
+
 ## Run locally 
 Clone the project 
 ```bash 
